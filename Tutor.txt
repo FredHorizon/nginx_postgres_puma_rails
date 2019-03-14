@@ -1,0 +1,43 @@
+sudo docker-compose run app bundle exec rails new . -d postgresql
+sudo chown -R $USER:$USER . /* executar dentro da pasta do app para liberar acesso ao projeto */
+sudo docker-compose build
+sudo docker-compose run app bundle exec rails db:create /* cria o banco */
+sudo docker-compose run app bundle exec rails g scaffold User name:string email:string /* gera a estrutura para uma tabela */
+sudo docker-compose run app bundle exec rails db:migrate /* migra tabela para do postgresql */
+sudo docker-compose run app bundle exec rails g controller home index
+sudo docker-compose build
+sudo docker-compose down
+sudo docker-compose up -d
+
+# configurar o arquivos '.env'
+sudo docker-compose run app bundle exec rails secret /* gera a chave secreta para o modo de produção no arquivo 'config/secrets.yml'*/
+sudo docker-compose run app bundle exec rails assets:precompile RAILS_ENV=production /* gera os elementos da pasta public que vão para produção */
+```
+I, [2019-03-13T02:04:01.899892 #1]  INFO -- : Writing /rails_app/public/assets/application-51d1da99474f493eae6392011c6f283a1d0e98c9d2077a331f63bb5ee7d1c1e4.js
+I, [2019-03-13T02:04:01.901094 #1]  INFO -- : Writing /rails_app/public/assets/application-51d1da99474f493eae6392011c6f283a1d0e98c9d2077a331f63bb5ee7d1c1e4.js.gz
+I, [2019-03-13T02:04:02.276115 #1]  INFO -- : Writing /rails_app/public/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css
+I, [2019-03-13T02:04:02.276374 #1]  INFO -- : Writing /rails_app/public/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css.gz
+```
+sudo docker-compose run app bundle exec rails db:create RAILS_ENV=production /* cria a base de dados da produção */
+sudo docker-compose run app bundle exec rails db:migrate RAILS_ENV=production /* migra a produção para o bando pg */
+
+docker-compose down
+docker-compose build
+
+===================
+Config mod production
+===================
+/nginx/Dockerfile
+/nginx/app.conf
+
+docker-compose build
+docker-compose up -d
+http://myapp.local/
+
+===================
+Publicar na ocean
+===================
+ssh-keygen -t rsa -b 4096 -C "fredoliveira.sys@gmail.com" /* gerar a chave ssh */
+/home/sgz/.ssh
+    * id_rsa
+    * id_rsa.pub
